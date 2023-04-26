@@ -1,0 +1,109 @@
+body {
+    background-color: #333333;
+    background-image: radial-gradient(circle, rgba(255, 255, 255, 0.02) 2%, transparent 20%),
+                      radial-gradient(circle, rgba(255, 255, 255, 0.02) 1%, transparent 20%);
+    background-position: 0 0, 25px 25px;
+    background-size: 50px 50px;
+    margin: 0;
+    padding: 0;
+  }
+
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 0 13rem 13rem;
+}
+
+.title {
+    font-weight: bold;
+    color: #e1e1e1;
+    text-align: center;
+    margin: 2rem auto;
+    font-size: 35px;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 70%;
+    background-color: #333333;
+    padding: 2rem;
+    border-radius: 10px;
+    border: 0.5px solid #e1e1e1;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+}
+
+label {
+    color: #e1e1e1;
+    font-size: 20px;
+    margin-top: 1rem;
+}
+
+input,
+textarea {
+    width: 100%;
+    padding: 1rem;
+    margin: 1rem 0;
+    font-size: 20px;
+    color: #e1e1e1;
+    background-color: #222222;
+    border: 0.5px solid #d0d0d0;
+    border-radius: 5px;
+}
+
+button {
+    width: 100%;
+    padding: 1rem;
+    margin-top: 1rem;
+    background-color: #e1e1e1;
+    color: #333333;
+    border: 0.5px solid #d0d0d0;
+    border-radius: 5px;
+    font-size: 20px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+button:hover {
+    background-color: #d0d0d0;
+}
+
+@media (max-width: 768px) {
+    .title {
+        font-size: 30px;
+    }
+
+    form {
+        width: 90%;
+    }
+
+    label,
+    input,
+    textarea {
+        font-size: 18px;
+    }
+
+    button[type='submit'],
+    button[type='button'] {
+        font-size: 18px;
+    }
+}
+
+@media (max-width: 576px) {
+    .title {
+        font-size: 25px;
+    }
+
+    label,
+    input,
+    textarea {
+        font-size: 16px;
+    }
+
+    button[type='submit'],
+    button[type='button'] {
+        font-size: 16px;
+    }
+}

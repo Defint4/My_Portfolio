@@ -1,0 +1,4 @@
+AuthType Basic 
+AuthName "Protected WebSite" 
+AuthUserFile /kunden/homepages/36/d958064533/htdocs/admin/.htpasswd 
+require valid-user

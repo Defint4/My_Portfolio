@@ -1,0 +1,14 @@
+.title {
+    font-weight: bold;
+    color : #e1e1e1;
+    text-align: center;
+    margin: 2rem auto;
+    font-size: 35px;
+}
+
+iframe {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0 auto;
+}

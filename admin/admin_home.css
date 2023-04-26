@@ -1,0 +1,57 @@
+body {
+    background-color: #333333;
+    background-image: radial-gradient(circle, rgba(255, 255, 255, 0.02) 2%, transparent 20%),
+                      radial-gradient(circle, rgba(255, 255, 255, 0.02) 1%, transparent 20%);
+    background-position: 0 0, 25px 25px;
+    background-size: 50px 50px;
+    margin: 0;
+    padding: 0;
+  }
+  
+h1 {
+    text-align: center;
+    padding: 20px;
+    color: #e1e1e1
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+}
+
+th, td {
+    border: 1px solid #ccc;
+    text-align: left;
+    padding: 8px;
+}
+
+td {
+    color : #e1e1e1;
+    font-size: small;
+}
+th {
+    background-color: #e1e1e1;
+    font-weight: bold;
+}
+
+tr:nth-child(even) {
+    background-color: #3a3a3a;
+}
+
+button {
+    background-color: #4CAF50;
+    border: none;
+    color: white;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+    padding: 8px 16px;
+}
+
+button:hover {
+    background-color: #45a049;
+}

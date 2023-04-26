@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Jeu en Python</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/brython/3.11.2/brython.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/brython/3.11.2/brython_stdlib.min.js"></script>
+    <link rel="stylesheet" href="Game.css" />
+</head>
+<body onload="brython()">
+
+    <div class="button-container">
+        <button id="start_ai">IA vs J1</button>
+        <button id="start_pvp">J1 vs J2</button>
+    </div>
+    <div class="game-title">Morpions</div>
+    <div id="game-info"></div>
+    <canvas id="game-canvas" width="780" height="450"></canvas>
+
+    <script type="text/python3" data-brython>
+        
+from browser import document, window
+from random import choice
+
+def init_game():
+    global canvas, ctx, start_ai_button, start_pvp_button, game_info
+    canvas = document['game-canvas']
+    ctx = canvas.getContext('2d')
+    start_ai_button = document['start_ai']
+    start_pvp_button = document['start_pvp']
+    game_info = document['game-info']
+
+    canvas.bind('click', on_canvas_click)
+    start_ai_button.bind('click', start_ai_game_and_init)
+    start_pvp_button.bind('click', start_pvp_game_and_init)
+    draw_board()
+
+
+board = [
+    [None, None, None],
+    [None, None, None],
+    [None, None, None]
+]
+players = ['J1', 'J2']
+current_player_index = 0
+game_over = False
+ai_mode = False
+
+def reset_board():
+    global board
+    board = [
+        [None, None, None],
+        [None, None, None],
+        [None, None, None]
+    ]
+
+def draw_board():
+    ctx.clearRect(0, 0, canvas.width, canvas.height)
+    ctx.strokeStyle = "#E1E1E1"
+    ctx.lineWidth = 5
+    ctx.beginPath()
+
+    for i in range(1, 3):
+        ctx.moveTo(i * canvas.width // 3, 0)
+        ctx.lineTo(i * canvas.width // 3, canvas.height)
+        ctx.moveTo(0, i * canvas.height // 3)
+        ctx.lineTo(canvas.width, i * canvas.height // 3)
+
+    ctx.stroke()
+
+    for y, row in enumerate(board):
+        for x, cell in enumerate(row):
+            if cell:
+                draw_symbol(x, y, cell)
+
+def draw_symbol(x, y, symbol):
+    margin = canvas.width // 8
+    if symbol == 'J1':
+        ctx.beginPath()
+        ctx.arc(x * canvas.width // 3 + canvas.width // 6, y * canvas.height // 3 + canvas.height // 6, canvas.width // 6 - margin, 0, 2 * 3.14159265359)
+        ctx.lineWidth = 5
+        ctx.strokeStyle = "#E1E1E1"
+        ctx.stroke()
+    elif symbol == 'J2':
+        ctx.beginPath()
+        ctx.moveTo(x * canvas.width // 3 + margin, y * canvas.height // 3 + margin)
+        ctx.lineTo((x + 1) * canvas.width // 3 - margin, (y + 1) * canvas.height // 3 - margin)
+        ctx.moveTo((x + 1) * canvas.width // 3 - margin, y * canvas.height // 3 + margin)
+        ctx.lineTo(x * canvas.width // 3 + margin, (y + 1) * canvas.height // 3 - margin)
+        ctx.lineWidth = 5
+        ctx.strokeStyle = "#E1E1E1"
+        ctx.stroke()
+
+def check_winner():
+    for row in board:
+        if row[0] and row[0] == row[1] == row[2]:
+            return row[0]
+    for col in range(3):
+        if board[0][col] and board[0][col] == board[1][col] == board[2][col]:
+            return board[0][col]
+    if board[0][0] and board[0][0] == board[1][1] == board[2][2]:
+        return board[0][0]
+    if board[0][2] and board[0][2] == board[1][1] == board[2][0]:
+        return board[0][2]
+    return None
+
+def ai_move():
+    available_moves = [(x, y) for y, row in enumerate(board) for x, cell in enumerate(row) if cell is None]
+    if available_moves:
+        return choice(available_moves)
+    return None
+
+def make_move(x, y):
+    global current_player_index, game_over
+    if not game_over and board[y][x] is None:
+        board[y][x] = players[current_player_index]
+        winner = check_winner()
+        if winner:
+            game_info.text = f"{winner} a gagné !"
+            game_over = True
+        elif not any(None in row for row in board):
+            game_info.text = "Match nul !"
+            game_over = True
+        else:
+            current_player_index = (current_player_index + 1) % len(players)
+            game_info.text = f"Au tour de {players[current_player_index]}"
+            if ai_mode and current_player_index == 1:
+                x, y = ai_move()
+                if x is not None and y is not None:
+                    make_move(x, y)
+
+def on_canvas_click(ev):
+    x, y = ev.clientX - canvas.offsetLeft, ev.clientY - canvas.offsetTop
+    x, y = x * 3 // canvas.width, y * 3 // canvas.height
+    make_move(x, y)
+    draw_board()
+
+def start_ai_game(ev):
+    global ai_mode, game_over, current_player_index
+    ai_mode = True
+    game_over = False
+    current_player_index = 0
+    reset_board()
+    game_info.text = f"Au tour de {players[current_player_index]}"
+    draw_board()
+
+def start_pvp_game(ev):
+    global ai_mode, game_over, current_player_index
+    ai_mode = False
+    game_over = False
+    current_player_index = 0
+    reset_board()
+    game_info.text = f"Au tour de {players[current_player_index]}"
+    draw_board()
+
+    
+def start_ai_game_and_init(ev):
+    document.querySelector('.game-title').style.display = 'none'
+    document.querySelector('#game-canvas').style.display = 'block'
+    document.querySelector('#game-info').style.display = 'block'
+    init_game()
+    start_ai_game(ev)
+
+def start_pvp_game_and_init(ev):
+    document.querySelector('.game-title').style.display = 'none'
+    document.querySelector('#game-canvas').style.display = 'block'
+    document.querySelector('#game-info').style.display = 'block'
+    init_game()
+    start_pvp_game(ev)
+
+init_game()
+</script>
+</body>
+</html>

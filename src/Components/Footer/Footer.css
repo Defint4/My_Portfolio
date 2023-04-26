@@ -1,0 +1,35 @@
+.footer {
+    position: relative;
+    padding: 2rem 0;
+  }
+  
+  .line {
+    border-bottom: 1px solid #e1e1e1;
+    margin: 0 auto;
+    width: 80%;
+    position: relative;
+    z-index: -1;
+  }
+  
+  .footer-content {
+    text-align: center;
+  }
+  
+  .footer-content p {
+    color: #e1e1e1;
+    font-size: 16px;
+    margin: 1rem 0;
+  }
+  
+  @media screen and (max-width: 768px) {
+    .footer-content p {
+      font-size: 14px;
+    }
+  }
+  
+  @media screen and (max-width: 480px) {
+    .footer-content p {
+      font-size: 12px;
+    }
+  }
+  

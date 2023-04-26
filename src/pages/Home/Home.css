@@ -1,0 +1,72 @@
+.home {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+
+.about-me {
+  text-indent: 1em;
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 22px;
+  line-height: 30px;
+  text-align: justify;
+  color: #E1E1E1;
+  /* max-width: 900px; */
+  /* margin: 0 auto; */
+  /* padding: 0 1rem; */
+  /* width: 100%; */
+}
+
+.top {
+  font-weight: bold;
+  color: #e1e1e1;
+  text-align: center;
+  margin: 2rem auto;
+  font-size: 20px;
+}
+
+.top-skills {
+  font-weight: bold;
+  color: #e1e1e1;
+  text-align: center;
+  margin: 2rem auto;
+  font-size: 20px;
+}
+
+.skills {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin: 2rem 0;
+  max-width: 900px;
+  padding: 0 1rem;
+  width: 100%;
+}
+
+
+@media (max-width: 768px) {
+  .about-me {
+    font-size: 18px;
+    line-height: 28px;
+  }
+
+  .top,
+  .top-skills {
+    font-size: 18px;
+  }
+}
+
+@media (max-width: 576px) {
+  .about-me {
+    font-size: 16px;
+    line-height: 26px;
+  }
+
+  .top,
+  .top-skills {
+    font-size: 16px;
+  }
+}
